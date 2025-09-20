@@ -31,3 +31,5 @@ This plugin adds test users and test block comments to make it easier to test th
 - Enable the Block Commenting feature in the Gutenberg plugin Experiments settings.
 
 ### Screenshot
+
+![Screenshot](https://raw.githubusercontent.com/t-hamano/block-commenting-data-generator/refs/heads/main/screenshot.png)

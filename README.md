@@ -8,10 +8,15 @@ This plugin adds test users and test block comments to make it easier to test th
 ## Features
 
 - Create 100 test users when the plugin is activated.
-- Create comments from a random user, a random comment, and a random date chosen from the last three years.
+- Create comments from a random user, a random comment, and a random date.
 - Override the avatar URL of the test users to better visualize the avatar.
 - Allow duplicate comments.
 - All test users and test block comments will be deleted when the plugin is deactivated.
+
+## Prerequisites
+
+- This plugin requires the latest Gutenberg plugin to be installed and activated.
+- Enable the Block Commenting feature in the Gutenberg plugin Experiments settings.
 
 ## Installation
 
@@ -22,13 +27,6 @@ This plugin adds test users and test block comments to make it easier to test th
 ## Uninstallation
 
 1. Deactivate the plugin through the 'Plugins' menu in WordPress. Once deactivated, all test users and test block comments will be deleted.
-
-## How to use
-
-### Prerequisites
-
-- This plugin requires the latest Gutenberg plugin to be installed and activated.
-- Enable the Block Commenting feature in the Gutenberg plugin Experiments settings.
 
 ### Screenshot
 

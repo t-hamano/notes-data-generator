@@ -1,0 +1,38 @@
+{
+	"name": "block-commenting-data-generator",
+	"version": "0.1.0",
+	"author": "Aki Hamano",
+	"license": "GPL-2.0-or-later",
+	"devDependencies": {
+		"@wordpress/env": "^10.31.0",
+		"@wordpress/icons": "10.31.0",
+		"@wordpress/scripts": "^30.24.0",
+		"husky": "^9.1.7",
+		"lint-staged": "16.1.6",
+		"prettier": "npm:wp-prettier@3.0.3"
+	},
+	"scripts": {
+		"wp-env": "wp-env",
+		"stop": "wp-env stop",
+		"start": "wp-scripts start",
+		"build": "wp-scripts build",
+		"check-licenses": "wp-scripts check-licenses",
+		"lint": "npm run lint:css && npm run lint:js && npm run lint:types && npm run lint:php",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"lint:php": "composer lint",
+		"format": "wp-scripts format",
+		"prepare": "husky"
+	},
+	"lint-staged": {
+		"*.{js,json,yml,yaml}": [
+			"wp-scripts format"
+		],
+		"*.{js,ts,tsx}": [
+			"wp-scripts lint-js"
+		],
+		"*.scss": [
+			"wp-scripts lint-style"
+		]
+	}
+}

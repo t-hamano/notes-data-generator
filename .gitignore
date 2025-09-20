@@ -1,0 +1,5 @@
+.vscode
+artifacts/
+node_modules/
+vendor/
+.wp-env.override.json

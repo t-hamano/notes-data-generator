@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { addFilter } from '@wordpress/hooks';
+import { addFilter, hasFilter } from '@wordpress/hooks';
 import {
 	PanelBody,
 	Button,
@@ -94,7 +94,14 @@ const withBlockCommentingDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 						throwOnError: true,
 					}
 				);
-				setAttributes( { blockCommentId: undefined } );
+
+				setAttributes( {
+					blockCommentId: undefined,
+					metadata: cleanEmptyObject( {
+						...attributes?.metadata,
+						commentId: undefined,
+					} ),
+				} );
 			}
 
 			const randomDates = Array.from(
@@ -118,7 +125,12 @@ const withBlockCommentingDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 				},
 				{ throwOnError: true }
 			);
-			setAttributes( { blockCommentId: firstComment.id } );
+
+			if ( hasFilter( 'blocks.registerBlockType', 'block-comment/modify-core-block-attributes' ) ) {
+				setAttributes( { blockCommentId: firstComment.id } );
+			} else {
+				setAttributes( { metadata: { ...attributes?.metadata, commentId: firstComment.id } } );
+			}
 
 			await Promise.all(
 				restUserIds.map( ( userId, index ) => {

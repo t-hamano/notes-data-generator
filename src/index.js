@@ -23,7 +23,7 @@ import { commentEditLink } from '@wordpress/icons';
 /**
  * Internal dependencies
  */
-import { COMMENT_CONTENT_STRINGS } from './utils';
+import { COMMENT_CONTENT_STRINGS, cleanEmptyObject } from './utils';
 
 function flattenBlocks( blocks ) {
 	const result = [];
@@ -222,14 +222,13 @@ const BlockCommentingDataGeneratorPluginSidebar = () => {
 	const { createNotice } = useDispatch( noticesStore );
 	const { deleteEntityRecord } = useDispatch( coreStore );
 	const { updateBlockAttributes } = useDispatch( blockEditorStore );
-	const { postId, postType, blocks } = useSelect( ( select ) => {
+	const { postId, postType, blocks, getBlockAttributes } = useSelect( ( select ) => {
 		const { getCurrentPostId, getCurrentPostType } = select( editorStore );
-		const { getBlocks } = select( blockEditorStore );
-
 		return {
 			postId: getCurrentPostId(),
 			postType: getCurrentPostType(),
-			blocks: getBlocks(),
+			blocks: select( blockEditorStore ).getBlocks(),
+			getBlockAttributes: select( blockEditorStore ).getBlockAttributes,
 		};
 	}, [] );
 
@@ -257,9 +256,19 @@ const BlockCommentingDataGeneratorPluginSidebar = () => {
 			const flatBlocks = flattenBlocks( blocks );
 			if ( flatBlocks.length > 0 ) {
 				const clientIds = flatBlocks.map( ( block ) => block.clientId );
-				updateBlockAttributes( clientIds, {
-					blockCommentId: undefined,
+				const newAttributes = {};
+				clientIds.forEach( ( clientId ) => {
+					const attributes = getBlockAttributes( clientId );
+					newAttributes[ clientId ] = {
+						...attributes,
+						blockCommentId: undefined,
+						metadata: cleanEmptyObject( {
+							...attributes?.metadata,
+							commentId: undefined,
+						} ),
+					};
 				} );
+				updateBlockAttributes( clientIds, newAttributes, { uniqueByBlock: true } );
 			}
 			await Promise.all(
 				comments.map( ( comment ) =>

@@ -29,3 +29,15 @@ export const COMMENT_CONTENT_STRINGS = [
 	'This is remarkably well-executed and valuable.',
 	'This would be enhanced with more concrete illustrations and detailed explanations.',
 ];
+
+// Removed falsy values from nested object.
+export const cleanEmptyObject = ( object ) => {
+	if ( object === null || typeof object !== 'object' || Array.isArray( object ) ) {
+		return object;
+	}
+
+	const cleanedNestedObjects = Object.entries( object )
+		.map( ( [ key, value ] ) => [ key, cleanEmptyObject( value ) ] )
+		.filter( ( [ , value ] ) => value !== undefined );
+	return ! cleanedNestedObjects.length ? undefined : Object.fromEntries( cleanedNestedObjects );
+};

@@ -10,7 +10,6 @@ This plugin adds test users and test Notes to make it easier to test the block-l
 - Create 100 test users when the plugin is activated.
 - Create notes from a random user, a random note, and a random date.
 - Override the avatar URL of the test users to better visualize the avatar.
-- Allow duplicate notes.
 - All test users and test block notes will be deleted when the plugin is deactivated.
 
 ## Prerequisites

@@ -161,8 +161,3 @@ function notes_data_generator_rest_prepare_comment( $response, $comment, $reques
 	return $response;
 }
 add_filter( 'rest_prepare_comment', 'notes_data_generator_rest_prepare_comment', 10, 3 );
-
-/**
- * Allow duplicate comments.
- */
-add_filter( 'duplicate_comment_id', '__return_empty_string' );

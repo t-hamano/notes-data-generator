@@ -1,4 +1,4 @@
-=== Block Commenting Data Generator ===
+=== Notes Data Generator ===
 Requires at least: 6.8
 Stable tag: 0.1.2
 Requires PHP: 8.3

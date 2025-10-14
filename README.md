@@ -1,6 +1,6 @@
-# Block Commenting Data Generator
+# Notes Data Generator
 
-This plugin adds test users and test block comments to make it easier to test the block-level commenting feature currently under development on the Gutenberg plugin.
+This plugin adds test users and test Notes to make it easier to test the block-level commenting feature currently under development on the Gutenberg plugin.
 
 > [!CAUTION]
 > Do not use this plugin in production site.
@@ -8,10 +8,10 @@ This plugin adds test users and test block comments to make it easier to test th
 ## Features
 
 - Create 100 test users when the plugin is activated.
-- Create comments from a random user, a random comment, and a random date.
+- Create notes from a random user, a random note, and a random date.
 - Override the avatar URL of the test users to better visualize the avatar.
-- Allow duplicate comments.
-- All test users and test block comments will be deleted when the plugin is deactivated.
+- Allow duplicate notes.
+- All test users and test block notes will be deleted when the plugin is deactivated.
 
 ## Prerequisites
 
@@ -30,4 +30,4 @@ This plugin adds test users and test block comments to make it easier to test th
 
 ### Screenshot
 
-![Screenshot](https://raw.githubusercontent.com/t-hamano/block-commenting-data-generator/refs/heads/main/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/t-hamano/notes-data-generator/refs/heads/main/screenshot.png)

@@ -23,7 +23,7 @@ import { commentEditLink } from '@wordpress/icons';
 /**
  * Internal dependencies
  */
-import { COMMENT_CONTENT_STRINGS, cleanEmptyObject } from './utils';
+import { NOTES_CONTENT_STRINGS, cleanEmptyObject } from './utils';
 
 function flattenBlocks( blocks ) {
 	const result = [];
@@ -34,11 +34,11 @@ function flattenBlocks( blocks ) {
 	return result;
 }
 
-const withBlockCommentingDataGeneratorControl = ( BlockEdit ) => ( props ) => {
+const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 	const { attributes, setAttributes, clientId } = props;
 	const { blockCommentId } = attributes;
-	const [ numberOfComments, setNumberOfComments ] = useState( 10 );
-	const [ oldestCommentDays, setOldestCommentDays ] = useState( 30 );
+	const [ numberOfNotes, setNumberOfNotes ] = useState( 10 );
+	const [ oldestNoteDays, setOldestNoteDays ] = useState( 30 );
 	const [ isGeneratingComments, setIsGeneratingComments ] = useState( false );
 	const { saveEntityRecord, deleteEntityRecord } = useDispatch( coreStore );
 	const { createNotice } = useDispatch( noticesStore );
@@ -82,7 +82,7 @@ const withBlockCommentingDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 		setIsGeneratingComments( true );
 		const randomizedTestUserIds = [ ...testUserIds ]
 			.sort( () => Math.random() - 0.5 )
-			.slice( 0, numberOfComments );
+			.slice( 0, numberOfNotes );
 		try {
 			if ( blockCommentId ) {
 				await deleteEntityRecord(
@@ -105,8 +105,8 @@ const withBlockCommentingDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 			}
 
 			const randomDates = Array.from(
-				{ length: numberOfComments },
-				() => new Date( Date.now() - Math.random() * oldestCommentDays * 24 * 60 * 60 * 1000 )
+				{ length: numberOfNotes },
+				() => new Date( Date.now() - Math.random() * oldestNoteDays * 24 * 60 * 60 * 1000 )
 			);
 			randomDates.sort( ( a, b ) => a.getTime() - b.getTime() );
 
@@ -117,7 +117,7 @@ const withBlockCommentingDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 				{
 					post: postId,
 					content:
-						COMMENT_CONTENT_STRINGS[ Math.floor( Math.random() * COMMENT_CONTENT_STRINGS.length ) ],
+						NOTES_CONTENT_STRINGS[ Math.floor( Math.random() * NOTES_CONTENT_STRINGS.length ) ],
 					comment_type: 'block_comment',
 					comment_approved: 0,
 					author: firstUserId,
@@ -134,14 +134,14 @@ const withBlockCommentingDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 
 			await Promise.all(
 				restUserIds.map( ( userId, index ) => {
-					const commentContent =
-						COMMENT_CONTENT_STRINGS[ Math.floor( Math.random() * COMMENT_CONTENT_STRINGS.length ) ];
+					const noteContent =
+						NOTES_CONTENT_STRINGS[ Math.floor( Math.random() * NOTES_CONTENT_STRINGS.length ) ];
 					return saveEntityRecord(
 						'root',
 						'comment',
 						{
 							post: postId,
-							content: commentContent,
+							content: noteContent,
 							comment_type: 'block_comment',
 							comment_approved: 0,
 							author: userId,
@@ -161,7 +161,7 @@ const withBlockCommentingDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 			const errorMessage =
 				error.message && error.code !== 'unknown_error'
 					? error.message
-					: 'An error occurred while performing adding comments.';
+					: 'An error occurred while performing adding notes.';
 			createNotice( 'error', errorMessage, {
 				type: 'snackbar',
 				isDismissible: true,
@@ -182,28 +182,28 @@ const withBlockCommentingDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 						<>
 							<Spacer marginBottom={ 4 }>
 								<Notice status="warning" isDismissible={ false }>
-									Note: Generating new comments will delete all existing comment.
+									Note: Generating new notes will delete all existing note.
 								</Notice>
 							</Spacer>
 							<RangeControl
 								__next40pxDefaultSize
 								__nextHasNoMarginBottom
-								label="Number of Comments"
-								value={ numberOfComments }
-								onChange={ setNumberOfComments }
+								label="Number of Notes"
+								value={ numberOfNotes }
+								onChange={ setNumberOfNotes }
 								min={ 1 }
 								max={ 100 }
-								help="The number of comments to generate."
+								help="The number of notes to generate."
 							/>
 							<RangeControl
 								__next40pxDefaultSize
 								__nextHasNoMarginBottom
-								label="Days back for oldest comment"
-								value={ oldestCommentDays }
-								onChange={ setOldestCommentDays }
+								label="Days back for oldest note"
+								value={ oldestNoteDays }
+								onChange={ setOldestNoteDays }
 								min={ 1 }
 								max={ 700 }
-								help="Comments will be generated between the selected date and today."
+								help="Notes will be generated between the selected date and today."
 							/>
 							<Button
 								accessibleWhenDisabled
@@ -213,7 +213,7 @@ const withBlockCommentingDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 								disabled={ isGeneratingComments }
 								onClick={ generateComments }
 							>
-								Generate Comments
+								Generate Notes
 							</Button>
 						</>
 					) }
@@ -223,14 +223,10 @@ const withBlockCommentingDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 	);
 };
 
-addFilter(
-	'editor.BlockEdit',
-	'block-commenting-data-generator',
-	withBlockCommentingDataGeneratorControl
-);
+addFilter( 'editor.BlockEdit', 'notes-data-generator', withNotesDataGeneratorControl );
 
-const BlockCommentingDataGeneratorPluginSidebar = () => {
-	const [ isDeletingComments, setIsDeletingComments ] = useState( false );
+const NotesDataGeneratorPluginSidebar = () => {
+	const [ isDeletingNotes, setIsDeletingNotes ] = useState( false );
 	const { createNotice } = useDispatch( noticesStore );
 	const { deleteEntityRecord } = useDispatch( coreStore );
 	const { updateBlockAttributes } = useDispatch( blockEditorStore );
@@ -244,7 +240,7 @@ const BlockCommentingDataGeneratorPluginSidebar = () => {
 		};
 	}, [] );
 
-	const { records: comments } = useEntityRecords(
+	const { records: notes } = useEntityRecords(
 		'root',
 		'comment',
 		{
@@ -262,8 +258,8 @@ const BlockCommentingDataGeneratorPluginSidebar = () => {
 		return null;
 	}
 
-	const deleteAllComments = async () => {
-		setIsDeletingComments( true );
+	const deleteAllNotes = async () => {
+		setIsDeletingNotes( true );
 		try {
 			const flatBlocks = flattenBlocks( blocks );
 			if ( flatBlocks.length > 0 ) {
@@ -283,17 +279,11 @@ const BlockCommentingDataGeneratorPluginSidebar = () => {
 				updateBlockAttributes( clientIds, newAttributes, { uniqueByBlock: true } );
 			}
 			await Promise.all(
-				comments.map( ( comment ) =>
-					deleteEntityRecord(
-						'root',
-						'comment',
-						comment.id,
-						{ force: true },
-						{ throwOnError: true }
-					)
+				notes.map( ( note ) =>
+					deleteEntityRecord( 'root', 'comment', note.id, { force: true }, { throwOnError: true } )
 				)
 			);
-			createNotice( 'success', 'All block comments deleted successfully.', {
+			createNotice( 'success', 'All block notes deleted successfully.', {
 				type: 'snackbar',
 				isDismissible: true,
 			} );
@@ -301,37 +291,37 @@ const BlockCommentingDataGeneratorPluginSidebar = () => {
 			const errorMessage =
 				error.message && error.code !== 'unknown_error'
 					? error.message
-					: 'An error occurred while performing adding comments.';
+					: 'An error occurred while performing adding notes.';
 			createNotice( 'error', errorMessage, {
 				type: 'snackbar',
 				isDismissible: true,
 			} );
 		} finally {
-			setIsDeletingComments( false );
+			setIsDeletingNotes( false );
 		}
 	};
 
 	return (
 		<>
-			<PluginSidebarMoreMenuItem target="block-commenting-data-generator" icon={ commentEditLink }>
-				Block Commenting Data Generator
+			<PluginSidebarMoreMenuItem target="notes-data-generator" icon={ commentEditLink }>
+				Notes Data Generator
 			</PluginSidebarMoreMenuItem>
 			<PluginSidebar
 				icon={ commentEditLink }
-				title="Block Commenting Data Generator"
-				name="block-commenting-data-generator"
+				title="Notes Data Generator"
+				name="notes-data-generator"
 			>
 				<Spacer padding={ 4 }>
-					<p>Permanently delete all block comments from current post.</p>
+					<p>Permanently delete all block notes from current post.</p>
 					<Button
 						__next40pxDefaultSize
 						accessibleWhenDisabled
 						variant="primary"
-						disabled={ isDeletingComments || ! comments?.length }
-						isBusy={ isDeletingComments }
-						onClick={ deleteAllComments }
+						disabled={ isDeletingNotes || ! notes?.length }
+						isBusy={ isDeletingNotes }
+						onClick={ deleteAllNotes }
 					>
-						Delete all block comments
+						Delete all block notes
 					</Button>
 				</Spacer>
 			</PluginSidebar>
@@ -339,6 +329,6 @@ const BlockCommentingDataGeneratorPluginSidebar = () => {
 	);
 };
 
-registerPlugin( 'block-commenting-data-generator', {
-	render: BlockCommentingDataGeneratorPluginSidebar,
+registerPlugin( 'notes-data-generator', {
+	render: NotesDataGeneratorPluginSidebar,
 } );

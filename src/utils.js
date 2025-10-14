@@ -1,4 +1,4 @@
-export const COMMENT_CONTENT_STRINGS = [
+export const NOTES_CONTENT_STRINGS = [
 	'Great work!',
 	'This needs improvement.',
 	'Excellent point made here.',

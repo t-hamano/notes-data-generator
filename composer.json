@@ -1,5 +1,5 @@
 {
-	"name": "t-hamano/block-commenting-data-generator",
+	"name": "t-hamano/notes-data-generator",
 	"license": "GPL-2.0-or-later",
 	"require-dev": {
 		"squizlabs/php_codesniffer": "*",

@@ -118,8 +118,8 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 					post: postId,
 					content:
 						NOTES_CONTENT_STRINGS[ Math.floor( Math.random() * NOTES_CONTENT_STRINGS.length ) ],
-					comment_type: 'block_comment',
-					comment_approved: 0,
+					type: 'block_comment',
+					status: 'hold',
 					author: firstUserId,
 					date: randomDates[ 0 ].toISOString(),
 				},
@@ -129,7 +129,12 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 			if ( hasFilter( 'blocks.registerBlockType', 'block-comment/modify-core-block-attributes' ) ) {
 				setAttributes( { blockCommentId: firstComment.id } );
 			} else {
-				setAttributes( { metadata: { ...attributes?.metadata, commentId: firstComment.id } } );
+				setAttributes( {
+					metadata: {
+						...attributes?.metadata,
+						commentId: firstComment.id,
+					},
+				} );
 			}
 
 			await Promise.all(
@@ -142,8 +147,8 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 						{
 							post: postId,
 							content: noteContent,
-							comment_type: 'block_comment',
-							comment_approved: 0,
+							type: 'block_comment',
+							status: 'hold',
 							author: userId,
 							parent: firstComment.id,
 							date: randomDates[ index + 1 ].toISOString(),
@@ -276,7 +281,9 @@ const NotesDataGeneratorPluginSidebar = () => {
 						} ),
 					};
 				} );
-				updateBlockAttributes( clientIds, newAttributes, { uniqueByBlock: true } );
+				updateBlockAttributes( clientIds, newAttributes, {
+					uniqueByBlock: true,
+				} );
 			}
 			await Promise.all(
 				notes.map( ( note ) =>

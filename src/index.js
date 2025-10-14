@@ -118,7 +118,7 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 					post: postId,
 					content:
 						NOTES_CONTENT_STRINGS[ Math.floor( Math.random() * NOTES_CONTENT_STRINGS.length ) ],
-					type: 'block_comment',
+					type: 'note',
 					status: 'hold',
 					author: firstUserId,
 					date: randomDates[ 0 ].toISOString(),
@@ -147,7 +147,7 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 						{
 							post: postId,
 							content: noteContent,
-							type: 'block_comment',
+							type: 'note',
 							status: 'hold',
 							author: userId,
 							parent: firstComment.id,
@@ -250,7 +250,7 @@ const NotesDataGeneratorPluginSidebar = () => {
 		'comment',
 		{
 			post: postId,
-			type: 'block_comment',
+			type: 'note',
 			status: 'all',
 			per_page: -1,
 		},

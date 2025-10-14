@@ -68,7 +68,7 @@ function notes_data_generator_deactivate() {
 				'user_id' => $user->ID,
 				'status'  => 'all',
 				'number'  => 0,
-				'type'    => 'block_comment',
+				'type'    => 'note',
 			)
 		);
 

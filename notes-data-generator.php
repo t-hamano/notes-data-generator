@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Notes Data Generator
- * Description: Activating this plugin will create 100 test users for testing the block-level commenting feature.
+ * Description: Activating this plugin will create 30 test users for testing the block-level commenting feature.
  * Requires at least: 6.8
  * Requires PHP: 8.3
  * Version: 0.3.1
@@ -17,12 +17,12 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Create 100 test users when the plugin is activated.
+ * Create 30 test users when the plugin is activated.
  */
 function notes_data_generator_activate() {
 	$created_count = 0;
 
-	for ( $i = 1; $i <= 100; $i++ ) {
+	for ( $i = 1; $i <= 30; $i++ ) {
 		$index    = str_pad( $i, 3, '0', STR_PAD_LEFT );
 		$username = 'test_user_' . $index;
 		$email    = 'test' . $index . '@example.com';

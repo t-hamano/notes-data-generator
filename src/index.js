@@ -197,7 +197,7 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 								value={ numberOfNotes }
 								onChange={ setNumberOfNotes }
 								min={ 1 }
-								max={ 100 }
+								max={ 30 }
 								help="The number of notes to generate."
 							/>
 							<RangeControl

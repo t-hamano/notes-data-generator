@@ -29,5 +29,9 @@ This plugin adds test users and test Notes to make it easier to test the block-l
 
 ### Screenshots
 
+#### Block Sidebar
 ![Block Sidebar](https://raw.githubusercontent.com/t-hamano/notes-data-generator/refs/heads/main/screenshot-1.png)
+
+#### Plugin Sidebar
+
 ![Plugin Sidebar](https://raw.githubusercontent.com/t-hamano/notes-data-generator/refs/heads/main/screenshot-2.png)

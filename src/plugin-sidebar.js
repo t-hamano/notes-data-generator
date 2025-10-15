@@ -60,7 +60,6 @@ const NotesDataGeneratorPluginSidebar = () => {
 					const attributes = getBlockAttributes( clientId );
 					newAttributes[ clientId ] = {
 						...attributes,
-						blockCommentId: undefined,
 						metadata: cleanEmptyObject( {
 							...attributes?.metadata,
 							commentId: undefined,

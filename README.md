@@ -25,7 +25,7 @@ This plugin adds test users and test Notes to make it easier to test the block-l
 
 ## Uninstallation
 
-1. Deactivate the plugin through the 'Plugins' menu in WordPress. Once deactivated, all test users and test block comments will be deleted.
+1. Deactivate the plugin through the 'Plugins' menu in WordPress. Once deactivated, all test users and test notes will be deleted.
 
 ### Screenshot
 

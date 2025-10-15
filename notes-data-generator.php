@@ -52,7 +52,7 @@ function notes_data_generator_activate() {
 register_activation_hook( __FILE__, 'notes_data_generator_activate' );
 
 /**
- * Delete all test users and test block comments when the plugin is deactivated.
+ * Delete all test users and test notes when the plugin is deactivated.
  */
 function notes_data_generator_deactivate() {
 	$users = get_users(
@@ -121,7 +121,7 @@ function notes_data_generator_show_deactivation_notice() {
 		deactivateLinks.forEach( function(link ) {
 			if ( link.getAttribute('id') === 'deactivate-notes-data-generator' ) {
 				link.addEventListener('click', function( event ) {
-					if ( ! window.confirm( 'Deactivation will delete all test users and test block comments. Are you sure you want to deactivate?' ) ) {
+					if ( ! window.confirm( 'Deactivation will delete all test users and test notes. Are you sure you want to deactivate?' ) ) {
 						event.preventDefault();
 					}
 				} );

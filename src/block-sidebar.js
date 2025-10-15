@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { addFilter, hasFilter } from '@wordpress/hooks';
+import { addFilter } from '@wordpress/hooks';
 import {
 	PanelBody,
 	Button,
@@ -21,15 +21,14 @@ import { isUnmodifiedDefaultBlock } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
-import { NOTES_CONTENT_STRINGS, cleanEmptyObject } from './utils';
+import { NOTES_CONTENT_STRINGS } from './utils';
 
 const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 	const { attributes, setAttributes, clientId } = props;
-	const { blockCommentId } = attributes;
 	const [ numberOfNotes, setNumberOfNotes ] = useState( 3 );
 	const [ oldestNoteDays, setOldestNoteDays ] = useState( 30 );
-	const [ isGeneratingComments, setIsGeneratingComments ] = useState( false );
-	const { saveEntityRecord, deleteEntityRecord } = useDispatch( coreStore );
+	const [ isGeneratingNotes, setIsGeneratingNotes ] = useState( false );
+	const { saveEntityRecord } = useDispatch( coreStore );
 	const { createNotice } = useDispatch( noticesStore );
 
 	const { postId, postType, users, isLoadingUsers } = useSelect( ( select ) => {
@@ -67,32 +66,12 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 		return <BlockEdit { ...props } />;
 	}
 
-	const generateComments = async () => {
-		setIsGeneratingComments( true );
+	const generateNotes = async () => {
+		setIsGeneratingNotes( true );
 		const randomizedTestUserIds = [ ...testUserIds ]
 			.sort( () => Math.random() - 0.5 )
 			.slice( 0, numberOfNotes );
 		try {
-			if ( blockCommentId ) {
-				await deleteEntityRecord(
-					'root',
-					'comment',
-					blockCommentId,
-					{ force: true },
-					{
-						throwOnError: true,
-					}
-				);
-
-				setAttributes( {
-					blockCommentId: undefined,
-					metadata: cleanEmptyObject( {
-						...attributes?.metadata,
-						commentId: undefined,
-					} ),
-				} );
-			}
-
 			const randomDates = Array.from(
 				{ length: numberOfNotes },
 				() => new Date( Date.now() - Math.random() * oldestNoteDays * 24 * 60 * 60 * 1000 )
@@ -100,7 +79,7 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 			randomDates.sort( ( a, b ) => a.getTime() - b.getTime() );
 
 			const [ firstUserId, ...restUserIds ] = randomizedTestUserIds;
-			const firstComment = await saveEntityRecord(
+			const firstNote = await saveEntityRecord(
 				'root',
 				'comment',
 				{
@@ -115,16 +94,12 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 				{ throwOnError: true }
 			);
 
-			if ( hasFilter( 'blocks.registerBlockType', 'block-comment/modify-core-block-attributes' ) ) {
-				setAttributes( { blockCommentId: firstComment.id } );
-			} else {
-				setAttributes( {
-					metadata: {
-						...attributes?.metadata,
-						commentId: firstComment.id,
-					},
-				} );
-			}
+			setAttributes( {
+				metadata: {
+					...attributes?.metadata,
+					commentId: firstNote.id,
+				},
+			} );
 
 			await Promise.all(
 				restUserIds.map( ( userId, index ) => {
@@ -139,7 +114,7 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 							type: 'note',
 							status: 'hold',
 							author: userId,
-							parent: firstComment.id,
+							parent: firstNote.id,
 							date: randomDates[ index + 1 ].toISOString(),
 						},
 						{ throwOnError: true }
@@ -161,7 +136,7 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 				isDismissible: true,
 			} );
 		} finally {
-			setIsGeneratingComments( false );
+			setIsGeneratingNotes( false );
 		}
 	};
 
@@ -201,11 +176,11 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 							/>
 							<Button
 								accessibleWhenDisabled
-								isBusy={ isGeneratingComments }
+								isBusy={ isGeneratingNotes }
 								variant="primary"
 								__next40pxDefaultSize
-								disabled={ isGeneratingComments }
-								onClick={ generateComments }
+								disabled={ isGeneratingNotes }
+								onClick={ generateNotes }
 							>
 								Generate notes
 							</Button>

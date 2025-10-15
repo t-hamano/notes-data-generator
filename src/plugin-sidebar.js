@@ -14,16 +14,7 @@ import { commentEditLink } from '@wordpress/icons';
 /**
  * Internal dependencies
  */
-import { cleanEmptyObject } from './utils';
-
-function flattenBlocks( blocks ) {
-	const result = [];
-	blocks.forEach( ( block ) => {
-		result.push( block );
-		result.push( ...flattenBlocks( block.innerBlocks ) );
-	} );
-	return result;
-}
+import { cleanEmptyObject, flattenBlocks } from './utils';
 
 const NotesDataGeneratorPluginSidebar = () => {
 	const [ isDeletingNotes, setIsDeletingNotes ] = useState( false );

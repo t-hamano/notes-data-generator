@@ -41,3 +41,13 @@ export const cleanEmptyObject = ( object ) => {
 		.filter( ( [ , value ] ) => value !== undefined );
 	return ! cleanedNestedObjects.length ? undefined : Object.fromEntries( cleanedNestedObjects );
 };
+
+// Flatten the blocks array.
+export function flattenBlocks( blocks ) {
+	const result = [];
+	blocks.forEach( ( block ) => {
+		result.push( block );
+		result.push( ...flattenBlocks( block.innerBlocks ) );
+	} );
+	return result;
+}

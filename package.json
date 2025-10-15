@@ -4,11 +4,11 @@
 	"author": "Aki Hamano",
 	"license": "GPL-2.0-or-later",
 	"devDependencies": {
-		"@wordpress/env": "^10.31.0",
-		"@wordpress/icons": "10.31.0",
-		"@wordpress/scripts": "^30.24.0",
+		"@wordpress/env": "^10.32.0",
+		"@wordpress/icons": "10.32.0",
+		"@wordpress/scripts": "^30.25.0",
 		"husky": "^9.1.7",
-		"lint-staged": "16.1.6",
+		"lint-staged": "16.2.4",
 		"prettier": "npm:wp-prettier@3.0.3"
 	},
 	"scripts": {

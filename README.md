@@ -2,10 +2,12 @@
 
 This plugin adds test users and test Notes to make it easier to test the block-level commenting feature.
 
+## Download
+
 > [!CAUTION]
 > Do not use this plugin in production site.
 
-Download link: https://github.com/t-hamano/notes-data-generator/archive/refs/heads/main.zip
+https://github.com/t-hamano/notes-data-generator/archive/refs/heads/main.zip
 
 ## Features
 

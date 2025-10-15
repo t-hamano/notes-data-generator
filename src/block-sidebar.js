@@ -26,7 +26,7 @@ import { NOTES_CONTENT_STRINGS, cleanEmptyObject } from './utils';
 const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 	const { attributes, setAttributes, clientId } = props;
 	const { blockCommentId } = attributes;
-	const [ numberOfNotes, setNumberOfNotes ] = useState( 10 );
+	const [ numberOfNotes, setNumberOfNotes ] = useState( 3 );
 	const [ oldestNoteDays, setOldestNoteDays ] = useState( 30 );
 	const [ isGeneratingComments, setIsGeneratingComments ] = useState( false );
 	const { saveEntityRecord, deleteEntityRecord } = useDispatch( coreStore );

@@ -105,7 +105,7 @@ const NotesDataGeneratorPluginSidebar = () => {
 				name="notes-data-generator"
 			>
 				<Spacer padding={ 4 }>
-					<p>Permanently delete all block notes from current post.</p>
+					<p>Permanently delete all notes from current post.</p>
 					<Button
 						__next40pxDefaultSize
 						accessibleWhenDisabled
@@ -114,7 +114,7 @@ const NotesDataGeneratorPluginSidebar = () => {
 						isBusy={ isDeletingNotes }
 						onClick={ deleteAllNotes }
 					>
-						Delete all block notes
+						Delete all notes
 					</Button>
 				</Spacer>
 			</PluginSidebar>

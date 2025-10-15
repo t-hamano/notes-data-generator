@@ -147,7 +147,7 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 				} )
 			);
 
-			createNotice( 'success', 'Comments generated successfully.', {
+			createNotice( 'success', 'Notes generated.', {
 				type: 'snackbar',
 				isDismissible: true,
 			} );
@@ -155,7 +155,7 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 			const errorMessage =
 				error.message && error.code !== 'unknown_error'
 					? error.message
-					: 'An error occurred while performing adding notes.';
+					: 'An error occurred while adding notes.';
 			createNotice( 'error', errorMessage, {
 				type: 'snackbar',
 				isDismissible: true,
@@ -169,14 +169,14 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 		<>
 			<BlockEdit { ...props } />
 			<InspectorControls>
-				<PanelBody title="Block Comment">
+				<PanelBody title="Notes Data Generator">
 					{ isLoadingUsers ? (
 						<Spinner />
 					) : (
 						<>
 							<Spacer marginBottom={ 4 }>
 								<Notice status="warning" isDismissible={ false }>
-									Note: Generating new notes will delete all existing note.
+									Note: Generating new notes will delete all existing notes.
 								</Notice>
 							</Spacer>
 							<RangeControl
@@ -207,7 +207,7 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 								disabled={ isGeneratingComments }
 								onClick={ generateComments }
 							>
-								Generate Notes
+								Generate notes
 							</Button>
 						</>
 					) }

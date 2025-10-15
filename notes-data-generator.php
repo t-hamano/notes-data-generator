@@ -31,7 +31,7 @@ function notes_data_generator_activate() {
 			continue;
 		}
 
-		$user_id = wp_create_user( $username, 'password', $email );
+		$user_id = wp_create_user( $username, wp_generate_password( 24, false ), $email );
 
 		if ( ! is_wp_error( $user_id ) ) {
 			++$created_count;

@@ -21,7 +21,7 @@ This plugin adds test users and test Notes to make it easier to test the block-l
 
 1. Download the zip from this repository
 2. Upload the zip to the `wp-content/plugins` directory.
-3. Activate the plugin through the 'Plugins' menu in WordPress. Once activated, 30 test users with username `test_user_{index}` will be created. The password of the test users will be `password`.
+3. Activate the plugin through the 'Plugins' menu in WordPress. Once activated, 30 test users with username `test_user_{index}` will be created. The password of the test users will be randomly generated.
 
 ## Uninstallation
 

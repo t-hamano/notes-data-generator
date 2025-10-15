@@ -4,7 +4,7 @@
  * Description: Activating this plugin will create 30 test users for testing the block-level commenting feature.
  * Requires at least: 6.8
  * Requires PHP: 8.3
- * Version: 0.3.1
+ * Version: 0.4.0
  * Author: Aki Hamano
  * Author URI: https://github.com/t-hamano
  * License: GPL2 or later

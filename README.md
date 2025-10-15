@@ -27,6 +27,7 @@ This plugin adds test users and test Notes to make it easier to test the block-l
 
 1. Deactivate the plugin through the 'Plugins' menu in WordPress. Once deactivated, all test users and test notes will be deleted.
 
-### Screenshot
+### Screenshots
 
-![Screenshot](https://raw.githubusercontent.com/t-hamano/notes-data-generator/refs/heads/main/screenshot.png)
+![Block Sidebar](https://raw.githubusercontent.com/t-hamano/notes-data-generator/refs/heads/main/screenshot-1.png)
+![Plugin Sidebar](https://raw.githubusercontent.com/t-hamano/notes-data-generator/refs/heads/main/screenshot-2.png)

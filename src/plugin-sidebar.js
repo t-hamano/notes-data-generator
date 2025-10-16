@@ -6,7 +6,12 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { useState } from '@wordpress/element';
 import { registerPlugin } from '@wordpress/plugins';
-import { PluginSidebar, PluginSidebarMoreMenuItem, store as editorStore } from '@wordpress/editor';
+import {
+	PluginSidebar,
+	PluginSidebarMoreMenuItem,
+	PostTypeSupportCheck,
+	store as editorStore,
+} from '@wordpress/editor';
 import { useEntityRecords, store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { commentEditLink } from '@wordpress/icons';
@@ -21,11 +26,9 @@ const NotesDataGeneratorPluginSidebar = () => {
 	const { createNotice } = useDispatch( noticesStore );
 	const { deleteEntityRecord } = useDispatch( coreStore );
 	const { updateBlockAttributes } = useDispatch( blockEditorStore );
-	const { postId, postType, blocks, getBlockAttributes } = useSelect( ( select ) => {
-		const { getCurrentPostId, getCurrentPostType } = select( editorStore );
+	const { postId, blocks, getBlockAttributes } = useSelect( ( select ) => {
 		return {
-			postId: getCurrentPostId(),
-			postType: getCurrentPostType(),
+			postId: select( editorStore ).getCurrentPostId(),
 			blocks: select( blockEditorStore ).getBlocks(),
 			getBlockAttributes: select( blockEditorStore ).getBlockAttributes,
 		};
@@ -45,7 +48,7 @@ const NotesDataGeneratorPluginSidebar = () => {
 		}
 	);
 
-	if ( ! postId || ! postType || ( postType !== 'post' && postType !== 'page' ) ) {
+	if ( ! ( !! postId && typeof postId === 'number' ) ) {
 		return null;
 	}
 
@@ -94,7 +97,7 @@ const NotesDataGeneratorPluginSidebar = () => {
 	};
 
 	return (
-		<>
+		<PostTypeSupportCheck supportKeys="editor.notes">
 			<PluginSidebarMoreMenuItem target="notes-data-generator" icon={ commentEditLink }>
 				Notes Data Generator
 			</PluginSidebarMoreMenuItem>
@@ -117,10 +120,14 @@ const NotesDataGeneratorPluginSidebar = () => {
 					</Button>
 				</Spacer>
 			</PluginSidebar>
-		</>
+		</PostTypeSupportCheck>
 	);
 };
 
 registerPlugin( 'notes-data-generator', {
-	render: NotesDataGeneratorPluginSidebar,
+	render: () => (
+		<PostTypeSupportCheck supportKeys="editor.notes">
+			<NotesDataGeneratorPluginSidebar />
+		</PostTypeSupportCheck>
+	),
 } );

@@ -13,7 +13,7 @@ import {
 import { useSelect, useDispatch } from '@wordpress/data';
 import { InspectorControls } from '@wordpress/block-editor';
 import { useState } from '@wordpress/element';
-import { store as editorStore } from '@wordpress/editor';
+import { PostTypeSupportCheck, store as editorStore } from '@wordpress/editor';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { isUnmodifiedDefaultBlock } from '@wordpress/blocks';
@@ -31,8 +31,8 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 	const { saveEntityRecord } = useDispatch( coreStore );
 	const { createNotice } = useDispatch( noticesStore );
 
-	const { postId, postType, users, isLoadingUsers } = useSelect( ( select ) => {
-		const { getCurrentPostId, getCurrentPostType } = select( editorStore );
+	const { postId, users, isLoadingUsers } = useSelect( ( select ) => {
+		const { getCurrentPostId } = select( editorStore );
 		const { getUsers, isResolving } = select( coreStore );
 		const query = {
 			who: 'authors',
@@ -42,19 +42,12 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 		};
 		return {
 			postId: getCurrentPostId(),
-			postType: getCurrentPostType(),
 			users: getUsers( query ),
 			isLoadingUsers: isResolving( 'getUsers', [ query ] ),
 		};
 	}, [] );
 
-	if (
-		! postId ||
-		! postType ||
-		( postType !== 'post' && postType !== 'page' ) ||
-		! users?.length ||
-		isUnmodifiedDefaultBlock( clientId )
-	) {
+	if ( ! postId || ! users?.length || isUnmodifiedDefaultBlock( clientId ) ) {
 		return <BlockEdit { ...props } />;
 	}
 
@@ -143,51 +136,53 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 	return (
 		<>
 			<BlockEdit { ...props } />
-			<InspectorControls>
-				<PanelBody title="Notes Data Generator">
-					{ isLoadingUsers ? (
-						<Spinner />
-					) : (
-						<>
-							<Spacer marginBottom={ 4 }>
-								<Notice status="warning" isDismissible={ false }>
-									Note: Generating new notes will delete all existing notes.
-								</Notice>
-							</Spacer>
-							<RangeControl
-								__next40pxDefaultSize
-								__nextHasNoMarginBottom
-								label="Number of Notes"
-								value={ numberOfNotes }
-								onChange={ setNumberOfNotes }
-								min={ 1 }
-								max={ 30 }
-								help="The number of notes to generate."
-							/>
-							<RangeControl
-								__next40pxDefaultSize
-								__nextHasNoMarginBottom
-								label="Days back for oldest note"
-								value={ oldestNoteDays }
-								onChange={ setOldestNoteDays }
-								min={ 1 }
-								max={ 700 }
-								help="Notes will be generated between the selected date and today."
-							/>
-							<Button
-								accessibleWhenDisabled
-								isBusy={ isGeneratingNotes }
-								variant="primary"
-								__next40pxDefaultSize
-								disabled={ isGeneratingNotes }
-								onClick={ generateNotes }
-							>
-								Generate notes
-							</Button>
-						</>
-					) }
-				</PanelBody>
-			</InspectorControls>
+			<PostTypeSupportCheck supportKeys="editor.notes">
+				<InspectorControls>
+					<PanelBody title="Notes Data Generator">
+						{ isLoadingUsers ? (
+							<Spinner />
+						) : (
+							<>
+								<Spacer marginBottom={ 4 }>
+									<Notice status="warning" isDismissible={ false }>
+										Note: Generating new notes will delete all existing notes.
+									</Notice>
+								</Spacer>
+								<RangeControl
+									__next40pxDefaultSize
+									__nextHasNoMarginBottom
+									label="Number of Notes"
+									value={ numberOfNotes }
+									onChange={ setNumberOfNotes }
+									min={ 1 }
+									max={ 30 }
+									help="The number of notes to generate."
+								/>
+								<RangeControl
+									__next40pxDefaultSize
+									__nextHasNoMarginBottom
+									label="Days back for oldest note"
+									value={ oldestNoteDays }
+									onChange={ setOldestNoteDays }
+									min={ 1 }
+									max={ 700 }
+									help="Notes will be generated between the selected date and today."
+								/>
+								<Button
+									accessibleWhenDisabled
+									isBusy={ isGeneratingNotes }
+									variant="primary"
+									__next40pxDefaultSize
+									disabled={ isGeneratingNotes }
+									onClick={ generateNotes }
+								>
+									Generate notes
+								</Button>
+							</>
+						) }
+					</PanelBody>
+				</InspectorControls>
+			</PostTypeSupportCheck>
 		</>
 	);
 };

@@ -3,7 +3,7 @@
  * Plugin Name: Notes Data Generator
  * Description: Activating this plugin will create 30 test users for testing the block-level commenting feature.
  * Requires at least: 6.8
- * Requires PHP: 8.3
+ * Requires PHP: 7.4
  * Version: 0.4.0
  * Author: Aki Hamano
  * Author URI: https://github.com/t-hamano

@@ -7,7 +7,7 @@ This plugin adds test users and test Notes to make it easier to test the block-l
 > [!CAUTION]
 > Do not use this plugin in production site.
 
-https://github.com/t-hamano/notes-data-generator/archive/refs/heads/main.zip
+[Download Notes Data Generator](https://github.com/t-hamano/notes-data-generator/archive/refs/heads/main.zip)
 
 ## Features
 

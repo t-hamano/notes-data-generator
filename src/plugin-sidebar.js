@@ -65,7 +65,7 @@ const NotesDataGeneratorPluginSidebar = () => {
 						...attributes,
 						metadata: cleanEmptyObject( {
 							...attributes?.metadata,
-							commentId: undefined,
+							noteId: undefined,
 						} ),
 					};
 				} );

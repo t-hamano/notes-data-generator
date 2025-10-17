@@ -90,7 +90,7 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 			setAttributes( {
 				metadata: {
 					...attributes?.metadata,
-					commentId: firstNote.id,
+					noteId: firstNote.id,
 				},
 			} );
 

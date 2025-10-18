@@ -143,11 +143,6 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 							<Spinner />
 						) : (
 							<>
-								<Spacer marginBottom={ 4 }>
-									<Notice status="warning" isDismissible={ false }>
-										Note: Generating new notes will delete all existing notes.
-									</Notice>
-								</Spacer>
 								<RangeControl
 									__next40pxDefaultSize
 									__nextHasNoMarginBottom
@@ -178,6 +173,11 @@ const withNotesDataGeneratorControl = ( BlockEdit ) => ( props ) => {
 								>
 									Generate notes
 								</Button>
+								<Spacer marginTop={ 4 }>
+									<Notice status="warning" isDismissible={ false }>
+										Note: Generating new notes will remove any existing notes from this block.
+									</Notice>
+								</Spacer>
 							</>
 						) }
 					</PanelBody>

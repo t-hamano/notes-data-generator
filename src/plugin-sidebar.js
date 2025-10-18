@@ -86,7 +86,7 @@ const NotesDataGeneratorPluginSidebar = () => {
 			const errorMessage =
 				error.message && error.code !== 'unknown_error'
 					? error.message
-					: 'An error occurred while performing adding notes.';
+					: 'An error occurred while adding notes.';
 			createNotice( 'error', errorMessage, {
 				type: 'snackbar',
 				isDismissible: true,
@@ -107,7 +107,7 @@ const NotesDataGeneratorPluginSidebar = () => {
 				name="notes-data-generator"
 			>
 				<Spacer padding={ 4 }>
-					<p>Permanently delete all notes from current post.</p>
+					<p>Permanently delete all notes from the current post.</p>
 					<Button
 						__next40pxDefaultSize
 						accessibleWhenDisabled

@@ -121,7 +121,7 @@ function notes_data_generator_show_deactivation_notice() {
 		deactivateLinks.forEach( function(link ) {
 			if ( link.getAttribute('id') === 'deactivate-notes-data-generator' ) {
 				link.addEventListener('click', function( event ) {
-					if ( ! window.confirm( 'Deactivation will delete all test users and test notes. Are you sure you want to deactivate?' ) ) {
+					if ( ! window.confirm( 'Deactivating this plugin will delete all test users and test notes. Are you sure you want to deactivate?' ) ) {
 						event.preventDefault();
 					}
 				} );

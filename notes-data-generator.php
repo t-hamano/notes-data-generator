@@ -161,3 +161,13 @@ function notes_data_generator_rest_prepare_comment( $response, $comment, $reques
 	return $response;
 }
 add_filter( 'rest_prepare_comment', 'notes_data_generator_rest_prepare_comment', 10, 3 );
+
+/**
+ * Add a custom message to the plugin meta.
+ */
+function notes_data_generator_add_plugin_row_meta_message( $plugin_file, $plugin_data ) {
+	if ( 'notes-data-generator/notes-data-generator.php' === $plugin_file ) {
+		echo '<div class="notice notice-error inline" style="margin:0"><p>Do not use this plugin in production site.</p></div>';
+	}
+}
+add_action( 'after_plugin_row_meta', 'notes_data_generator_add_plugin_row_meta_message', 10, 2 );
